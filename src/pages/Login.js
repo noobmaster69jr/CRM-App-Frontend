@@ -46,6 +46,22 @@ function Login(){
       userSignin(data)
         .then((response) => {
           console.log(response);
+          //set item name, value
+           localStorage.setItem("name", response.data.name);
+           localStorage.setItem("userId", response.data.userId);
+           localStorage.setItem("email", response.data.email);
+           localStorage.setItem("userTypes", response.data.userTypes);
+           localStorage.setItem("userStatus", response.data.userStatus);
+           localStorage.setItem("token", response.data.accessToken);
+
+            if (response.data.userTypes === "CUSTOMER")
+              window.location.href = "/customer";
+            else if (response.data.userTypes === "ENGINEER")
+              window.location.href = "/engineer";
+            else if (response.data.userTypes === "ADMIN")
+              window.location.href = "/admin";
+            else window.location.href = "/";
+
         })
         .catch((error) => {
           console.log(error);
@@ -91,7 +107,7 @@ function Login(){
                   />
                 </div>
                 <div className="d-flex justify-content-between m-1">
-                  <span className="my-1">User Type</span>
+                  <span className="my-1">User Types</span>
                   <DropdownButton
                     align="end"
                     title={userType}
