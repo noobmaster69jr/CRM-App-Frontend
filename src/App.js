@@ -1,14 +1,22 @@
-import Login from "./pages/Login"
-import 'bootstrap/dist/css/bootstrap.min.css';
-import 'bootstrap/dist/js/bootstrap.bundle.min';
-import './App.css';
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import Admin from './pages/Admin.js'
-import Customer from './pages/Customer'
-import Engineer from './pages/Engineer'
-import NotFound from './pages/NotFound'
-import RequireAuth from './components/RequireAuth'
+
+import Login from "./pages/Login";
+import Admin from "./pages/Admin.js";
+import Customer from "./pages/Customer";
+import Engineer from "./pages/Engineer";
+import NotFound from "./pages/NotFound";
+import RequireAuth from "./components/RequireAuth";
 import Unauth from "./pages/Unauthorized";
+
+
+import "@coreui/coreui/dist/css/coreui.min.css";
+import "@coreui/coreui/dist/js/coreui.min.js";
+import "react-circular-progressbar/dist/styles.css";
+import "bootstrap/dist/css/bootstrap.min.css";
+import "bootstrap/dist/js/bootstrap.bundle.min";
+import "bootstrap-icons/font/bootstrap-icons.css";
+
+import "./App.css";
 
 // Login/ signup page -> for 3 types of users
 // 3 types of user :
@@ -33,7 +41,7 @@ function App() {
           <Route path="/" element={<Login />} />
           {/*protected routes by require auth start*/}
           {/* <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}> */}
-            <Route path="/admin" element={<Admin />} />
+          <Route path="/admin" element={<Admin />} />
           {/* </Route> */}
           <Route element={<RequireAuth allowedRoles={[ROLES.ENGINEER]} />}>
             <Route path="/engineer" element={<Engineer />} />
