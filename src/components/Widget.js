@@ -41,4 +41,4 @@ function Widget({ color, title, icon, ticketCount, pathColor }) {
   );
 }
 
-export default Widget
+export default Widget;

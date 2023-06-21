@@ -130,7 +130,7 @@ const Engineer = () => {
     updateSelectedCurrTicket(Object.assign({}, selectedCurrTicket));
   };
 
-  console.log(selectedCurrTicket);
+
 
   // fetch put  api with updated details
   const updateTicket = (e) => {
