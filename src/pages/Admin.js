@@ -1,14 +1,14 @@
-import {useState, useEffect} from 'react'
+import Widget from "../components/Widget";
+import { useState, useEffect } from "react";
 import MaterialTable from "@material-table/core";
 import Sidebar from "../components/Sidebar";
 import { CircularProgressbar, buildStyles } from "react-circular-progressbar";
 import ExportCsv from "@material-table/exporters/csv";
-import  ExportPdf from "@material-table/exporters/pdf";
+import ExportPdf from "@material-table/exporters/pdf";
 import { fetchTicket, ticketUpdation } from "../api/tickets";
 import { Modal, Button } from "react-bootstrap";
 
-
-// TASKS : 
+// TASKS :
 /*
 Create a common dynamic component for widgets 
 // GET API for users : userid
@@ -22,8 +22,7 @@ Pass the userdetails in material table
 5. Fetch the put api -> userid, updated data-> log the response 
 */
 
-
-// put logic 
+// put logic
 /*
 1. Grab the curr ticket : ticket id , all the curr data along with it 
 2. Store the curr Ticket in a state -> display the curr ticket details in the modal 
@@ -65,7 +64,6 @@ const userColumns = [
     },
   },
 ];
-
 
 function Admin() {
   const [ticketDetails, setTicketDetails] = useState([]);
@@ -187,120 +185,40 @@ function Admin() {
       {/* Widgets starts */}
       <div className="row ms-5 ps-5 mb-5">
         {/* w1 */}
-        <div className="col-xs-12 col-lg-3 col-md-6 my-1">
-          <div
-            className="card shadow bg-primary bg-opacity-25 text-center"
-            style={{ width: 15 + "rem" }}
-          >
-            <h5 className="card-subtitle my-2 fw-bolder text-primary">
-              <i className="bi bi-envelope-open text-primary mx-2"></i>Open
-            </h5>
-            <hr />
-            <div className="row mb-2 d-flex align-items-center">
-              <div className="col text-primary mx-4 fw-bolder display-6">
-                {ticketStatusCount.open}
-              </div>
-              <div className="col">
-                {/* Size of circular bar */}
-                <div style={{ width: 40, height: 40 }}>
-                  {/* How to use ? 
-                    Import from top
-                    value={the count of tickets}
-                    buildStyles({}) : a function that accepts obj. Obj takes css styles in key value format. Colors can be accepted in hex, rgpa, and text names
-                  */}
-                  <CircularProgressbar
-                    value={ticketStatusCount.open}
-                    styles={buildStyles({
-                      pathColor: "darkblue",
-                    })}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        {/*  color, title, icon, ticketCount, pathColor  */}
+        <Widget
+          color="primary"
+          title="OPEN"
+          icon="envelope-open"
+          ticketCount={ticketStatusCount.open}
+          pathColor="darkblue"
+        />
         {/* w2 */}
-        <div className="col-xs-12 col-lg-3 col-md-6 my-1">
-          <div
-            className="card shadow bg-warning bg-opacity-25 text-center"
-            style={{ width: 15 + "rem" }}
-          >
-            <h5 className="card-subtitle my-2 fw-bolder text-warning">
-              <i className="bi bi-hourglass-split text-warning  mx-2"></i>
-              Progress
-            </h5>
-            <hr />
-            <div className="row mb-2 d-flex align-items-center">
-              <div className="col text-warning mx-4 fw-bolder display-6">
-                {ticketStatusCount.progress}
-              </div>
-              <div className="col">
-                <div style={{ width: 40, height: 40 }}>
-                  <CircularProgressbar
-                    value={ticketStatusCount.progress}
-                    styles={buildStyles({
-                      pathColor: "darkgoldenrod",
-                    })}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Widget
+          color="warning"
+          title="PROGRESS"
+          icon="hourglass-split"
+          ticketCount={ticketStatusCount.progress}
+          pathColor="darkgoldenrod"
+        />
         {/* w3 */}
-        <div className="col-xs-12 col-lg-3 col-md-6 my-1">
-          <div
-            className="card shadow bg-success bg-opacity-25 text-center"
-            style={{ width: 15 + "rem" }}
-          >
-            <h5 className="card-subtitle my-2 text-success">
-              <i className="bi bi-check2-circle text-success mx-2"></i>Closed
-            </h5>
-            <hr />
-            <div className="row mb-2 d-flex align-items-center">
-              <div className="col text-success mx-4 fw-bolder display-6">
-                {ticketStatusCount.closed}
-              </div>
-              <div className="col">
-                <div style={{ width: 40, height: 40 }}>
-                  <CircularProgressbar
-                    value={ticketStatusCount.closed}
-                    styles={buildStyles({
-                      pathColor: "darkgreen",
-                    })}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+        <Widget
+          color="success"
+          title="CLOSED"
+          icon="check2-circle"
+          ticketCount={ticketStatusCount.closed}
+          pathColor="darkgreen"
+        />
+
         {/* w4 */}
-        <div className="col-xs-12 col-lg-3 col-md-6 my-1">
-          <div
-            className="card shadow bg-secondary bg-opacity-25 text-center"
-            style={{ width: 15 + "rem" }}
-          >
-            <h5 className="card-subtitle my-2 text-secondary">
-              <i className="bi bi-slash-circle text-secondary mx-2"></i>Blocked
-            </h5>
-            <hr />
-            <div className="row mb-2 d-flex align-items-center">
-              <div className="col text-secondary mx-4 fw-bolder display-6">
-                {ticketStatusCount.blocked}
-              </div>
-              <div className="col">
-                <div style={{ width: 40, height: 40 }}>
-                  <CircularProgressbar
-                    value={ticketStatusCount.blocked}
-                    styles={buildStyles({
-                      pathColor: "darkgrey",
-                    })}
-                  />
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
+
+        <Widget
+          color="secondary"
+          title="BLOCKED"
+          icon="slash-circle"
+          ticketCount={ticketStatusCount.blocked}
+          pathColor="darkgrey"
+        />
       </div>
       {/* Widgets end */}
       <div className="text-center">
@@ -558,4 +476,4 @@ function Admin() {
   );
 }
 
-export default Admin
+export default Admin;

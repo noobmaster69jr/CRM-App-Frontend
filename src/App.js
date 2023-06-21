@@ -40,12 +40,12 @@ function App() {
         <Routes>
           <Route path="/" element={<Login />} />
           {/*protected routes by require auth start*/}
-          {/* <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}> */}
+          <Route element={<RequireAuth allowedRoles={[ROLES.ADMIN]} />}>
           <Route path="/admin" element={<Admin />} />
-          {/* </Route> */}
-          <Route element={<RequireAuth allowedRoles={[ROLES.ENGINEER]} />}>
-            <Route path="/engineer" element={<Engineer />} />
           </Route>
+          {/* <Route element={<RequireAuth allowedRoles={[ROLES.ENGINEER]} />}> */}
+            <Route path="/engineer" element={<Engineer />} />
+          {/* </Route> */}
           <Route element={<RequireAuth allowedRoles={[ROLES.CUSTOMER]} />}>
             <Route path="/customer" element={<Customer />} />
           </Route>
