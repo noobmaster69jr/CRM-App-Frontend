@@ -1,6 +1,7 @@
 import {useState} from 'react'
 import {DropdownButton, Dropdown} from 'react-bootstrap'
 import { userSignin } from '../api/auth'
+import { useNavigate } from "react-router-dom";
 
 
 /*
@@ -9,11 +10,20 @@ POST API
 2. Store the data 
 3. Call the api */
 
+/*
+POST API SIGNUP
+1. Grab the data : userid, username, email, usertype, password
+2. Store the data : username, email
+3. Call the api */
+
 function Login(){
     const [showSignup, setShowSignup] = useState(false)
     const [userType, setUserType] = useState("CUSTOMER")
     const [userId, setUserId] = useState("")
     const [password, setPassword] = useState("")
+    const [message, setMessage] = useState("");
+
+    const navigate = useNavigate();
 
 
     const toggleSignup = () =>{
@@ -32,9 +42,14 @@ function Login(){
     }
 
     const signupFn = () => {
+      // prevent default
+      // data : userid, name, email, password, usertype
+      // call teh api and pass data
+      // Display the successful message
       console.log("Sign up button triggered");
     };
 
+    
     const loginFn = (e) => {
       e.preventDefault();
 
@@ -55,12 +70,12 @@ function Login(){
            localStorage.setItem("token", response.data.accessToken);
 
             if (response.data.userTypes === "CUSTOMER")
-              window.location.href = "/customer";
+             navigate("/customer");
             else if (response.data.userTypes === "ENGINEER")
-              window.location.href = "/engineer";
+              navigate("/engineer");
             else if (response.data.userTypes === "ADMIN")
-              window.location.href = "/admin";
-            else window.location.href = "/";
+              navigate("/admin")
+            else navigate("/");
 
         })
         .catch((error) => {
@@ -140,13 +155,14 @@ function Login(){
               />
             </div>
             <div
-              className="m-1 text-center text-primary"
+              className="m-1 text-center text-primary clickable"
               onClick={toggleSignup}
             >
               {showSignup
                 ? "Already have an account? Signin"
                 : "Don't have an account? Sign up"}
             </div>
+            <div className="text-center text-danger">{message}</div>
           </form>
         </div>
       </div>
