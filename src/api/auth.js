@@ -6,7 +6,7 @@ const BASE_URL = "https://crm--backend.com";
 SIGNUP: 
 POST : api 
 url : /crm/api/v1/auth/signup
-data : userid, email, name, pw
+data : userid, email, name, pw, userType
  */
 
 export async function userSignup(data) {
